@@ -1,0 +1,105 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments (CRITICAL - HUGE SPACE SAVER!)
+venv/
+.venv/
+env/
+.env/
+ENV/
+env.bak/
+venv.bak/
+
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pytest
+.pytest_cache/
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+
+# Local cache directories
+cache/
+.cache/
+
+# Environment variables (keep secrets safe)
+.env
+bearer.txt
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# ===== DEPLOYMENT OPTIMIZATION =====
+# Exclude unnecessary files from Railway deployment
+
+# Development and testing files (NOT needed for production)
+test_*.py
+*_test.py
+test/
+tests/
+
+# Debug and development scripts (NOT needed for production)
+main_debug.py
+deploy.py
+deploy_production.py
+
+# Alternative implementations (NOT needed for production)
+query_engine_simple.py
+
+# Extra requirements files (only keep main requirements.txt)
+requirements-production.txt
+requirements-simple.txt
+requirements-optimized.txt
+
+# Documentation and setup files (NOT needed for production)
+README.md
+setup_github.md
+env_template.txt
+
+# Railway ignore file (not needed since we use .gitignore)
+.railwayignore
+
+# Example environment file (NOT needed for production)
+.env.example

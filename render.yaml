@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: insurance-qa-api
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT --workers 1 --log-level warning
+    envVars:
+      - key: GROQ_API_KEY
+        sync: false
+      - key: API_BEARER_TOKEN
+        sync: false
+    autoDeploy: true
+    healthCheckPath: /health
+    # Memory optimization settings
+    plan: free
+    # Resource limits for free tier
+    resources:
+      cpu: 0.1
+      memory: 512MB 

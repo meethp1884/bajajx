@@ -1,0 +1,47 @@
+# Production Requirements - Insurance Document QA API (Memory Optimized for 512MB)
+# Core API Framework
+fastapi==0.116.1
+uvicorn==0.35.0
+pydantic==2.11.7
+starlette==0.47.2
+
+# Environment & Security
+python-dotenv==1.0.0
+
+# HTTP Client (lightweight)
+aiohttp==3.12.15
+
+# Document Processing (optimized)
+pdfplumber==0.11.7
+python-docx==1.2.0
+docx2txt==0.9
+
+# AI/ML Libraries (CPU-optimized for memory efficiency)
+sentence-transformers==5.0.0
+tiktoken==0.9.0
+transformers==4.54.1
+torch==2.7.1+cpu  # CPU-only version saves ~200MB
+
+# Math/Science (optimized versions)
+numpy==2.3.2
+scipy==1.16.1
+scikit-learn==1.7.1
+
+# Vector Search - FAISS CPU (memory efficient)
+faiss-cpu==1.11.0
+
+# Utilities (minimal)
+requests==2.32.4
+
+# Additional dependencies (optimized)
+huggingface-hub==0.34.3
+tokenizers==0.21.4
+safetensors==0.5.3
+filelock==3.18.0
+packaging==25.0
+tqdm==4.67.1
+PyYAML==6.0.2
+regex==2025.7.34
+
+# Memory optimization
+psutil==5.9.8  # For memory monitoring
