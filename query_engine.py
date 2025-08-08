@@ -64,11 +64,11 @@ class QueryEngine:
         """
         # Load from environment variables if not provided
         self.embedding_model_name = embedding_model or os.getenv("EMBEDDING_MODEL", "all-MiniLM-L6-v2")
-        self.llm_model = llm_model or os.getenv("LLM_MODEL", "llama3-70b-8192")
+        self.llm_model = llm_model or os.getenv("LLM_MODEL", "sonar-pro")
         self.top_k = top_k
         self.similarity_threshold = similarity_threshold
         
-        logger.info(f"🤖 Initializing QueryEngine with Groq model: {self.llm_model}")
+        logger.info(f"🤖 Initializing QueryEngine with Perplexity model: {self.llm_model}")
         
         # Initialize embedding model with caching
         logger.info(f"📥 Loading embedding model: {self.embedding_model_name}")
@@ -77,12 +77,12 @@ class QueryEngine:
         load_time = time.time() - start_time
         logger.info(f"✅ Embedding model loaded in {load_time:.1f}s")
         
-        # Initialize Groq API configuration (better free tier)
-        self.groq_api_key = os.getenv("GROQ_API_KEY")
-        self.groq_base_url = "https://api.groq.com/openai/v1/chat/completions"
+        # Initialize Perplexity API configuration
+        self.perplexity_api_key = os.getenv("PERPLEXITY_API_KEY")
+        self.perplexity_base_url = "https://api.perplexity.ai/chat/completions"
         
-        if not self.groq_api_key:
-            raise ValueError("GROQ_API_KEY environment variable is required")
+        if not self.perplexity_api_key:
+            raise ValueError("PERPLEXITY_API_KEY environment variable is required")
         
         # Vector storage
         self.index = None
@@ -287,7 +287,7 @@ Answer:"""
     
     async def _generate_llm_answer(self, question: str, context: str, source_info: List[Dict]) -> str:
         """
-        Generate answer using Groq LLM with optimized performance and memory management
+        Generate answer using Perplexity Pro LLM with optimized performance and memory management
         """
         try:
             prompt = f"""CRITICAL: DO NOT SHOW YOUR THINKING PROCESS. GIVE ONLY THE FINAL ANSWER.
@@ -338,20 +338,23 @@ Answer:"""
 
         Answer:"""
 
-            # Optimized API call for speed using Groq
+            # Optimized API call for speed using Perplexity
             async with aiohttp.ClientSession() as session:
                 async with session.post(
-                    "https://api.groq.com/openai/v1/chat/completions",
+                    "https://api.perplexity.ai/chat/completions",
                     headers={
-                        "Authorization": f"Bearer {self.groq_api_key}",
+                        "Authorization": f"Bearer {self.perplexity_api_key}",
                         "Content-Type": "application/json"
                     },
                     json={
-                        "model": "llama3-70b-8192",  # Fast and accurate model
+                        "model": self.llm_model,
                         "messages": [{"role": "user", "content": prompt}],
-                        "temperature": 0.2,
-                        "max_tokens": 80,
-                        "stream": False
+                        "temperature": 0.2,  # Slightly higher for faster processing
+                        "max_tokens": 80,    # Much smaller for speed
+                        "stream": False,
+                        "search_recency_filter": "month",
+                        "return_citations": False,
+                        "return_images": False
                     },
                     timeout=aiohttp.ClientTimeout(total=8)  # 8 second timeout
                 ) as response:
